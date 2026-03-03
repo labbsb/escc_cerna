@@ -455,16 +455,26 @@ df_all <- rbind(mRNA_summary, lncRNA_summary, miRNA_summary)
 # Plot
 library(ggplot2)
 
-ggplot(df_all, aes(x = Type, y = Count, fill = Regulation)) +
+p <- ggplot(df_all, aes(x = Type, y = Count, fill = Regulation)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.9)) +
   geom_text(aes(label = Count), 
             position = position_dodge(width = 0.9), 
             vjust = -0.3, size = 3) +
   theme_minimal() +
-  labs(title = "Number of Mostly Upregulated and Downregulated Genes Across Samples",
+  labs(title = "Number of Upregulated and Downregulated lncRNAs, miRNAs\nand mRNAs Across All Samples",
        x = "Gene Type",
        y = "Number of Genes") +
   scale_fill_manual(values = c("Upregulated" = "coral3", "Downregulated" = "deepskyblue4"))
 
-ggsave("gene_regulation_barplot.pdf", width = 8, height = 6, units = "in")
+ggsave(
+  filename = "gene_reg_barplot.jpeg",
+  plot = p + theme(
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background  = element_rect(fill = "white", color = NA)
+  ),
+  device = "jpeg",
+  width = 8,
+  height = 6,
+  dpi = 300
+)
 
