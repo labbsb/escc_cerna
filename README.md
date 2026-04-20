@@ -12,4 +12,4 @@
 
 **Survival analysis:** SA_ESCC.R
 
-Authors: survival analysis Kuanysh Saarkytbayev, all other analysis Anel Ordabayeva
+Authors: survival analysis Kuanysh Saarkytbayev, all other analyses Anel Ordabayeva
