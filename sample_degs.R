@@ -1,5 +1,5 @@
 #Author Anel Ordabayeva
-
+ 
 library(DESeq2)
 library(EnhancedVolcano)
 library(biomaRt)
@@ -13,6 +13,7 @@ library(ggplot2)
 library(enrichplot)
 library(stringr)
 library(gridExtra)
+
 
 
 setwd("/mnt/sdb2/anelorda/")

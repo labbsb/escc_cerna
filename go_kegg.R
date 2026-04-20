@@ -6,7 +6,7 @@ library(dplyr)
 library(msigdbr)
 library(enrichplot)
 library(ReactomePA)
-
+ 
 setwd("/mnt/sdb2/anelorda/")
 up_genes <- rownames(logfc_mrna[logfc_mrna$average > 0, ])
 down_genes <- rownames(logfc_mrna[logfc_mrna$average < 0, ])

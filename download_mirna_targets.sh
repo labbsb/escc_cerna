@@ -1,6 +1,7 @@
 #Author Anel Ordabayeva
-
+ 
 #!/bin/bash
+
 
 CSV="DEMs_log2fc1_check.csv"
 OUTDIR="./MIRNA_1_TARGETS"

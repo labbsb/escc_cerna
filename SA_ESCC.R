@@ -10,6 +10,7 @@ library(tidyr)                   # Manipulates data frames
 library(dplyr)                   # Reshapes data
 library(miRBaseConverter)        # Converts between different miRNA naming formats
 
+
 # Get clinical data for TCGA-ESCA cohort -------------------
 clinical_esca <- GDCquery_clinic("TCGA-ESCA")
 

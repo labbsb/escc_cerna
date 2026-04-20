@@ -367,5 +367,6 @@ ggsave(
   height = 6,
   dpi = 300
 )
+ 
 
 cat("\nPlot saved to: anelorda/plots/miRNA_barplot_with_dots.jpeg\n")
