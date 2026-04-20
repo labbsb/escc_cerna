@@ -1,13 +1,11 @@
-#############################
-## 1. Load libraries
-#############################
+
+#Author Anel Ordabayeva
+
 library(DESeq2)
 library(dplyr)
 library(ggplot2)
 setwd("/mnt/sdb2/")
-#############################
-## 2. Read count matrix
-#############################
+
 
 data <- read.table("ksarkytbayev/nextflow_24_04_25/mirna_quant/edger_qc/mature_counts.csv", header = TRUE, sep = ",")
 
@@ -38,9 +36,7 @@ sample_cols <- sort(sample_cols)
 
 # Reorder data
 data <- data[, c(control_cols, sample_cols)]
-#############################
-## 4. Sample vector (patients)
-#############################
+
 sample_vector <- c(
   "control","control","control","control",
   "X001T","X001T","X001T",
@@ -61,9 +57,6 @@ sample_vector <- c(
   "X033T","X033T","X033T"
 )
 
-#############################
-## 5. Stage information
-#############################
 stage_map <- list(
   II  = c("X012T", "X017T"),
   III = c("X001T","X002T","X003T","X004T","X005T",
@@ -72,9 +65,7 @@ stage_map <- list(
   IV  = c("X011T","X025T")
 )
 
-#############################
-## 6. Build sample metadata
-#############################
+
 sample_ids <- colnames(data)
 
 sample_info <- data.frame(
@@ -98,9 +89,6 @@ sample_info$group   <- factor(sample_info$group, levels = c("control","tumor"))
 sample_info$stage   <- factor(sample_info$stage, levels = c("control","II","III","IV"))
 sample_info$patient <- factor(sample_info$patient)
 
-#############################
-## 7. DESeq A: POOLED
-#############################
 dds_pooled <- DESeqDataSetFromMatrix(
   countData = data,
   colData   = sample_info,
@@ -116,9 +104,6 @@ write.csv(
   file = "DESeq_pooled_tumor_vs_control.csv"
 )
 
-#############################
-## 8. DESeq B: BY STAGE
-#############################
 dds_stage <- DESeqDataSetFromMatrix(
   countData = data,
   colData   = sample_info,
@@ -135,9 +120,6 @@ write.csv(as.data.frame(res_stage_2),  "DESeq_stage_II_vs_control.csv")
 write.csv(as.data.frame(res_stage_3), "DESeq_stage_III_vs_control.csv")
 write.csv(as.data.frame(res_stage_4),  "DESeq_stage_IV_vs_control.csv")
 
-#############################
-## 9. DESeq C: BY INDIVIDUAL
-#############################
 dds_individual <- DESeqDataSetFromMatrix(
   countData = data,
   colData   = sample_info,
@@ -161,15 +143,9 @@ for (p in patients) {
   patient_results[[p]] <- res
 }
 
-#############################
-## 10. Optional: VST for PCA
-#############################
 vsd <- vst(dds_pooled, blind = FALSE)
 saveRDS(vsd, "VST_pooled.rds")
 
-#############################
-## 11. Filter significant results
-#############################
 
 replace_dot_with_dash_rownames <- function(df) {
   stopifnot(is.data.frame(df))
@@ -209,10 +185,7 @@ res_stage_4_sig <- res_stage_4 %>%
                 abs(log2FoldChange) > 1)
 res_stage_4_sig <- replace_dot_with_dash_rownames(res_stage_4_sig)
 
-#############################
-## 12. ALL STAGES ANALYSIS
-## Find miRNAs significant in ALL three stages with consistent direction
-#############################
+
 
 # Get miRNAs present in all three stages
 mirnas_stage_2 <- rownames(res_stage_2_sig)
@@ -247,11 +220,6 @@ n_all_stages_down <- length(all_stages_down)
 cat("ALL STAGES analysis (sig in II, III, IV with consistent direction)\n")
 cat("Upregulated in all stages:", n_all_stages_up, "\n")
 cat("Downregulated in all stages:", n_all_stages_down, "\n")
-
-#############################
-## 13. ALL SAMPLES ANALYSIS
-## Find miRNAs significant in ALL individual patients with consistent direction
-#############################
 
 # Process each patient's results
 patient_sig_list <- list()
@@ -300,9 +268,6 @@ cat("\nALL SAMPLES analysis (sig in all 16 patients with consistent direction)\n
 cat("Upregulated in all samples:", n_all_samples_up, "\n")
 cat("Downregulated in all samples:", n_all_samples_down, "\n")
 
-#############################
-## 14. INDIVIDUAL SAMPLE COUNTS (for dots)
-#############################
 
 patient_counts <- data.frame()
 
@@ -324,9 +289,7 @@ write.csv(patient_counts, "individual_patient_miRNA_counts.csv", row.names = FAL
 
 cat("\nIndividual patient counts saved to: individual_patient_miRNA_counts.csv\n")
 
-#############################
-## 15. POOLED COUNTS
-#############################
+
 
 n_pos_pooled <- sum(res_pooled_sig$log2FoldChange > 0, na.rm = TRUE)
 n_neg_pooled <- sum(res_pooled_sig$log2FoldChange < 0, na.rm = TRUE)
@@ -334,10 +297,6 @@ n_neg_pooled <- sum(res_pooled_sig$log2FoldChange < 0, na.rm = TRUE)
 cat("\nPOOLED analysis\n")
 cat("Upregulated:", n_pos_pooled, "\n")
 cat("Downregulated:", n_neg_pooled, "\n")
-
-#############################
-## 16. CREATE BARPLOT DATA
-#############################
 
 bar_data <- data.frame(
   dataset = c("Pooled", "Pooled", 
@@ -355,9 +314,6 @@ bar_data <- data.frame(
 bar_data$dataset <- factor(bar_data$dataset, 
                            levels = c("Pooled", "All Stages", "All Samples"))
 
-#############################
-## 17. CREATE DOT DATA (individual samples)
-#############################
 
 # Prepare data for dots overlay on "All Samples" category
 dots_data_up <- data.frame(
@@ -376,10 +332,6 @@ dots_data_down <- data.frame(
 
 dots_data <- rbind(dots_data_up, dots_data_down)
 dots_data$dataset <- factor(dots_data$dataset, levels = c("Pooled", "All Stages", "All Samples"))
-
-#############################
-## 18. CREATE THE BARPLOT WITH DOTS
-#############################
 
 geom_point(data = dots_data, 
            aes(x = dataset, y = count, color = direction),

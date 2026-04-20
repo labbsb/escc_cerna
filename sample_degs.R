@@ -1,3 +1,5 @@
+#Author Anel Ordabayeva
+
 library(DESeq2)
 library(EnhancedVolcano)
 library(biomaRt)

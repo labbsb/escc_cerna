@@ -1,3 +1,5 @@
+#Author Anel Ordabayeva
+
 setwd("/mnt/sdb2/anelorda/MIRNA_1_TARGETS/MIRNA_1_TARGETS")
 
 library(dplyr)

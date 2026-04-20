@@ -1,5 +1,5 @@
 # Task: Survival Analysis
-
+#Author : Kuanysh Sarkytbayev
 library(TCGAbiolinks)            # Downloads and processes TCGA data
 library(survminer)               # Visualizes survival curves
 library(survival)                # Fits Cox models and Kaplan-Meier survival curves

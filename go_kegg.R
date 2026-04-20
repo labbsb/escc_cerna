@@ -1,3 +1,4 @@
+#Author Anel Ordabayeva
 library(clusterProfiler)
 library(org.Hs.eg.db)
 library(ggplot2)

@@ -1,10 +1,12 @@
+#Author Anel Ordabayeva
+
 library(clusterProfiler)
 library(org.Hs.eg.db)
 library(dplyr)
 library(tidygraph)
 library(ggraph)
 library(ggplot2)
-
+setwd("/mnt/sdb2/anelorda/")
 mirna_mrna_targets <- read.csv("MIRNA_3_TARGETS/DEM3_to_DEG.csv", header = TRUE)
 head(mirna_mrna_targets)
 
@@ -180,14 +182,13 @@ g <- graph_from_data_frame(d = edges, vertices = nodes, directed = FALSE)
 
 p <- ggraph(g, layout = "fr") +
   geom_edge_link(color = "grey70", alpha = 0.6) +
-  geom_node_point(aes(color = Category, shape = type), size = 6) +
+  geom_node_point(aes(color = Category, shape = type), size = 4) +
   geom_node_text(
     aes(label = name),
     repel = TRUE,
-    size = 5,              # 🔹 increase text size here
-    fontface = "bold"      # optional: makes labels clearer
+    size = 4
   ) +
-  scale_shape_manual(values = c(miRNA = 17, mRNA = 16)) +
+  scale_shape_manual(values = c(miRNA = 17, mRNA = 15)) +
   scale_color_manual(
     values = c(
       "Both (Coronavirus disease - COVID-19 & Ribosome)" = "#E41A1C",
@@ -197,21 +198,27 @@ p <- ggraph(g, layout = "fr") +
       "Other" = "grey80"
     )
   ) +
-  theme_minimal(base_size = 14) +
+  theme_void(base_size = 13) +   # 🔹 removes background, grid, axes
   theme(
-    panel.background = element_rect(fill = "grey95"),
-    legend.position = "right"
+    panel.background = element_blank(),
+    plot.background  = element_blank(),
+    panel.grid       = element_blank(),
+    axis.title       = element_blank(),
+    axis.text        = element_blank(),
+    axis.ticks       = element_blank(),
+    legend.position  = "right"
   )
 
-# 🔹 Save as a 300-dpi PDF
 ggsave(
-  filename = "gene_miRNA_network.pdf",
+  filename = "network.jpg",   # or "network.jpeg"
   plot = p,
-  width = 10,        # in inches
+  width = 10,
   height = 8,
-  dpi = 300,
-  device = cairo_pdf  # ensures vector quality text and shapes
+  units = "in",
+  dpi = 400,
+  bg = "white"
 )
+
 
 setwd("MIRNA_3_TARGETS/MIRNA_3_TARGETS/")
 # Get all files ending with _trimmed.txt
