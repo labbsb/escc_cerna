@@ -1,6 +1,6 @@
-**miRNA analysis:** new_controls_deseq.R
+**miRNA DE analysis:** new_controls_deseq.R
 
-**mRNA and lncRNA analysis:** sample_degs.R
+**mRNA and lncRNA DE analysis:** sample_degs.R
 
 **Functional enrichment analysis:** go_kegg.R
 
@@ -12,4 +12,10 @@
 
 **Survival analysis:** SA_ESCC.R
 
+<<<<<<< HEAD
 Authors: survival analysis Kuanysh Saarkytbayev, all other analyses Anel Ordabayeva
+=======
+**Permutation test:** permutation_test.R
+
+**Authors:** survival analysis **Kuanysh Saarkytbayev**, all other analysis **Anel Ordabayeva**
+>>>>>>> b19ff1c (added permutation test and updated scripts)

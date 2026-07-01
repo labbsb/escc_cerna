@@ -19,7 +19,7 @@ library(gridExtra)
 setwd("/mnt/sdb2/anelorda/")
 
 # Load Data
-data_degs <- read.table("degs_mrna/mRNA_for_miRNA.xlsx - sheet.csv", header = TRUE, sep = ",")
+data_degs <- read.table("degs_mrna/mRNA_for_miRNA.csv", header = TRUE, sep = ",")
 
 # Remove unwanted samples
 samples_to_remove <- c("X009T", "X010T", "X013T", "X014T", "X019T", "X021T", "Normal_SRR7961236")
@@ -300,7 +300,7 @@ head(logfc_lncrna)
 
 
 
-# Connect to the Ensembl database
+ # Connect to the Ensembl database
 mart <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 
 # Get unique Ensembl gene IDs from logfc_mrna

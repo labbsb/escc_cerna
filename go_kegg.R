@@ -140,7 +140,7 @@ plot_enrichment <- function(go_bp_res, kegg_res, hallmark_res,
     labs(
       x = "Pathway / GO Term",
       y = "-log10(p.adjust)",
-      title = paste0("Enrichment Analysis (", direction, "-regulated genes)"),
+      title = paste0("Enrichment Analysis (", direction, "regulated genes)"),
       tag = panel_label
     ) +
     scale_fill_manual(values = c(
@@ -164,7 +164,7 @@ plot_enrichment <- function(go_bp_res, kegg_res, hallmark_res,
     plot = p,
     width = 10,
     height = 8,
-    dpi = 300
+    dpi = 600
   )
   
   # Save TIFF
@@ -174,7 +174,7 @@ plot_enrichment <- function(go_bp_res, kegg_res, hallmark_res,
     plot = p,
     width = 10,
     height = 8,
-    dpi = 300,
+    dpi = 600,
     compression = "lzw"
   )
   
@@ -185,14 +185,14 @@ plots <- list(
     ego_bp_down@result,
     ekegg_down@result,
     ehall_down@result,
-    direction = "down",
+    direction = "Down",
     panel_label = "b"
   ),
   up = plot_enrichment(
     ego_bp_up@result,
     ekegg_up@result,
     ehall_up@result,
-    direction = "up",
+    direction = "Up",
     panel_label = "a"
   )
 )
