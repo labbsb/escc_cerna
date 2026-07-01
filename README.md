@@ -12,10 +12,6 @@
 
 **Survival analysis:** SA_ESCC.R
 
-<<<<<<< HEAD
-Authors: survival analysis Kuanysh Saarkytbayev, all other analyses Anel Ordabayeva
-=======
 **Permutation test:** permutation_test.R
 
 **Authors:** survival analysis **Kuanysh Saarkytbayev**, all other analysis **Anel Ordabayeva**
->>>>>>> b19ff1c (added permutation test and updated scripts)
